@@ -1,0 +1,9 @@
+.idea
+settings.ini
+*.pyc
+.DS_Store
+venv
+build
+dist
+predict_phytolrr_phytolrr.egg-info
+token.txt
