@@ -251,6 +251,7 @@ const seqsRow = new Vue({
             }
         },
         onChangePageSize: function () {
+            seqsRow.pageIndex = 0;
             seqsRow.changePage(seqsRow.pageIndex, seqsRow.pageSize);
         }
     }

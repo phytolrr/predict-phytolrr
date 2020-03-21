@@ -78,13 +78,21 @@ $ predict-phytolrr -f test1.fasta -f test2.fasta
 
 ### To display the results in html
 
-The result can also be dumped to HTML files, so that they can be viewed in a browser. Using the `-o` option to specify the root path of the resulting HTML files:
+The result can also be dumped to HTML files, so that they can be viewed in a browser. Using the `-p` option to specify the root path of the resulting HTML files:
 
 ```bash
-$ predict-phytolrr -f test1.fasta -o ./
+$ predict-phytolrr -f test1.fasta -p ./
+Warning: The sequence AL3G49070.t1 contains unexpected amino *, will not be predicted
+Warning: The sequence AL3G41990.t1 contains unexpected amino *, will not be predicted
+Warning: The sequence AL8G14250.t1 contains unexpected amino *, will not be predicted
+214 sequences were predicted and the results have been saved in the file results.html
 
-... all prediction results for all leagal sequences in test1.fasta would be dumped to HTML files under the path `./`
 ```
+
+The program will generate two files:
+
+* `results.js` to save the prediction results
+* `results.html` to show the prediction results
 
 ## Predict Phyto LRRs in source code
 
