@@ -7,3 +7,5 @@ build
 dist
 predict_phytolrr_phytolrr.egg-info
 token.txt
+.pypirc
+results.js
