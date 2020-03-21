@@ -259,6 +259,11 @@ const seqsRow = new Vue({
 results.sort(function (s1, s2) {
     return s1.seq_id < s2.seq_id ? -1 : 1;
 });
+for (var i = 0; i < results.length; ++i) {
+    results[i]["motifs_16"].sort(function(m1, m2) {
+        return m1.offset - m2.offset;
+    });
+}
 seqsRow.changePage(0, 20);
 if (seqsRow.seqs.length > 0) {
     seqsRow.onSelect(seqsRow.seqs[0]);

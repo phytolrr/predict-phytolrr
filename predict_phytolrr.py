@@ -4,6 +4,7 @@ from phytolrr_predictor.tools.exception import ValidationError
 import sys
 import os
 import json
+import shutil
 from typing import List
 from Bio import SeqIO
 
@@ -75,6 +76,7 @@ def print_result(rets:List[PredictResult]):
 
 
 def dump_html(path:str, rets:List[PredictResult]):
+    os.mkdir(path)
     results = []
     for ret in rets:
         results.append({
@@ -88,6 +90,7 @@ def dump_html(path:str, rets:List[PredictResult]):
         f.write(';')
 
     module_path = os.path.join(os.path.dirname(__file__), 'phytolrr_predictor', 'resources')
+    shutil.copyfile(os.path.join(module_path, 'results.html'), os.path.join(path, 'results.html'))
 
 def main():
     parser = ArgumentParser(description='Predict LRRs(Leucine-Rich Repeat) from sequences')
