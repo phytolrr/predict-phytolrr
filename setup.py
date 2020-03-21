@@ -26,7 +26,8 @@ setuptools.setup(
         'numpy>=1.16.3'
     ],
     package_data={
-        "": ["*.js","*.html"],
+        "phytolrr_predictor.resources": ["*.js","*.html","*.css"],
+        "phytolrr_predictor.resources.jcss": ["*.js","*.html","*.css"],
     },
     entry_points={
         'console_scripts': [
