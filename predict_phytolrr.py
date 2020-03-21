@@ -24,7 +24,7 @@ def is_seq_valid(seq_id, seq):
     VALID_AMINO = {'A', 'R', 'N', 'D', 'C', 'E', 'Q', 'G', 'H', 'V', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y'}
     for amino in seq:
         if amino not in VALID_AMINO:
-            logging.warning("The sequence {} contains unexpected amino {}, will not be predicted".format(seq_id, amino))
+            print("Warning: The sequence {} contains unexpected amino {}, will not be predicted".format(seq_id, amino))
             return False
     return True
 
@@ -48,7 +48,7 @@ def read_seqs_from_files(file_paths:List[str]) -> List[Sequence]:
 
 def build_seq_from_str(seq_str:str) -> Sequence:
     if not is_seq_valid("inputted", seq_str):
-        return None
+        ValidationError(1, "The sequence input is invalid, and the prediction process will exit")
     return Sequence("Unknown_from_cmd_line", seq_str)
 
 
@@ -66,12 +66,12 @@ def print_result(rets:List[PredictResult]):
     first = True
     for ret in rets:
         if not first:
-            logging.info('')
+            print('')
         first = False
         ret.ret.sort(key=lambda m:m.offset)
-        logging.info("Prediction result for seq {}:".format(ret.seq.id))
+        print("Prediction result for seq {}:".format(ret.seq.id))
         for m in ret.ret:
-            logging.info(str.format("LRR offset {}, {}, score {}", m.offset, ret.seq.seq[m.offset:m.offset+16], m.score))
+            print(str.format("LRR offset {}, {}, score {}", m.offset, ret.seq.seq[m.offset:m.offset+16], m.score))
 
 
 def dump_html(path:str, ret:List[PredictResult]):
@@ -100,10 +100,7 @@ def main():
             raise ValidationError(1, "No valid sequences found in files {}".format(args.files))
 
     if args.sequence is not None:
-        seq = build_seq_from_str(args.sequence)
-        if seq is None:
-            raise ValidationError(1, "The sequence input is invalid, and the prediction process will exit")
-        seqs.append(seq)
+        seqs.append(build_seq_from_str(args.sequence))
 
     rets = predict_seqs(seqs)
     if args.output_prefix is None:
@@ -116,9 +113,8 @@ def main():
 
 if __name__ == "__main__":
     try:
-        logging.basicConfig(level=logging.INFO, format='%(message)s')
         exit(main())
     except ValidationError as e:
         if e.message == 1:
-            logging.error("Error: " + e.detail)
-            logging.error("Please enter `{} -h` to see the usage.".format(sys.argv[0]))
+            print("Error: " + e.detail)
+            print("Please enter `{} -h` to see the usage.".format(sys.argv[0]))

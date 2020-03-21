@@ -12,7 +12,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/phytolrr/predict-phytolrr",
-    packages=setuptools.find_packages(),
+    py_modules=['predict_phytolrr'],
+    packages=setuptools.find_packages(include=['phytolrr_predictor', 'phytolrr_predictor.*']),
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Development Status :: 4 - Beta",
@@ -21,8 +22,12 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'biopython>=1.73'
+        'biopython>=1.73',
+        'numpy>=1.16.3'
     ],
+    package_data={
+        "": ["*.js","*.html"],
+    },
     entry_points={
         'console_scripts': [
             'predict-phytolrr=predict_phytolrr:main',
