@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All results for LRR prediction</title>
+
+    <link rel="stylesheet" href="bootstrap-4.3.1.min.css">
+
+    <style type="text/css">
+        .highlight {
+            background-color: greenyellow;
+            border-bottom: 1px solid #000000;
+            border-top: 1px solid #000000;
+        }
+        .sequence {
+            word-wrap: break-word;
+            text-transform: uppercase;
+            font-family: Courier New;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div id="navigator-view" class="col-4">
+            <ul class="list-group">
+                <a class="list-group-item" href="#"
+                   v-for="seq in seqs"
+                   v-bind:class="{ active: seq.isActive }"
+                   v-on:click="onSelect(seq)">
+                    {{ seq.seq_id }}
+                </a>
+            </ul>
+
+            <div class="clearfix mt-1">
+                <div class="float-left">
+                    <div class="btn-group">
+                        <button type="button"
+                                v-bind:disabled="pageIndex===0 || waitingBackend"
+                                class="btn btn-outline-primary"
+                                v-on:click="prevPage()">&lsaquo;&lsaquo;
+                        </button>
+                        <button type="button"
+                                v-bind:disabled="pageIndex===Math.floor(total/pageSize) || waitingBackend"
+                                class="btn btn-outline-primary"
+                                v-on:click="nextPage()">&rsaquo;&rsaquo;
+                        </button>
+                    </div>
+                </div>
+                <div class="float-right">
+                    <div class="btn-group">
+                        <input type="number" min="1" v-bind:disabled="waitingBackend"
+                               v-model="goToIndex"
+                               placeholder="page"
+                               @keyup.enter="goTo">
+                        <button type="button"
+                                v-bind:disabled="waitingBackend"
+                                class="btn btn-outline-primary"
+                                v-on:click="goTo">Go
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-1">
+                {{pageIndex + 1}}/{{Math.ceil(total/pageSize)}}, page size:
+                <select v-model="pageSize" v-on:change="onChangePageSize()" v-bind:disabled="waitingBackend">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>40</option>
+                    <option>10000</option>
+                </select>
+            </p>
+
+        </div>
+
+        <div id="color-seq" class="col-8">
+            <h1>{{selectedSeq.seq_id}}</h1>
+            <p>Sequence length: {{selectedSeq.seq.length}}, LRRs num: {{motifTable.length}}</p>
+            <table class="table table-bordered table-sm sequence">
+                <thead>
+                <tr>
+                    <th>Start</th>
+                    <th>Score</th>
+                    <th>Sequence</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="motif in motifTable">
+                    <td>{{motif.offset}}</td>
+                    <td>{{motif.score | fixFloat}}</td>
+                    <td style="max-width: 500px">{{motif.seq}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="sequence">
+        <span v-for="seq in seqTexts" v-bind:offset="seq.offset"
+              v-bind:class="{ highlight: seq.highlight }">{{seq.seq}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="vue-2.6.10.min.js"></script>
+<script src="lrr_view.js"></script>
+<script src="results.js"></script>
+<script src="nav.js"></script>
+
+<script>
+    results.sort(function(s1, s2) {
+        return s1.seq_id < s2.seq_id ? -1 : 1;
+    });
+    seqsRow.changePage(0, 20);
+    if (seqsRow.seqs.length > 0) {
+        seqsRow.onSelect(seqsRow.seqs[0]);
+    }
+</script>
+</body>
+</html>

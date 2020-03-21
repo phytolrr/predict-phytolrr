@@ -1,21 +1,3 @@
-import Vue from 'vue'
-
-var globalSearch = new Vue({
-    el: '#global-search',
-    data: {
-        keyword: ''
-    },
-    methods: {
-        onSearch: function () {
-            if (globalSearch.keyword.length === 0) {
-                location.href = '/';
-                return;
-            }
-            location.href = '/?keyword=' + encodeURI(globalSearch.keyword);
-        }
-    }
-});
-
 
 var colorSeqView = new Vue({
     el: '#color-seq',
@@ -99,56 +81,3 @@ var colorSeqView = new Vue({
         }
     }
 });
-
-
-var seqInputGroup = new Vue({
-        el: '#input-seq-group',
-        data: {
-            seq: '',
-            waitingBackend: false,
-            validAmino: new Set('ARNDCEQGHVILKMFPSTWY')
-        },
-
-        methods: {
-            _changeWaitingState: function(isWating) {
-                seqInputGroup.waitingBackend = isWating;
-            },
-            findLrr: function () {
-                if (seqInputGroup.seq.length === 0) {
-                    alert("No sequence input");
-                }
-                seqInputGroup.seq = seqInputGroup.seq.replace(new RegExp('\\s', 'g'), '');
-                for (let i = 0; i < seqInputGroup.seq.length; ++i) {
-                    if (!seqInputGroup.validAmino.has(seqInputGroup.seq[i])) {
-                        alert("Unexpected amino " + seqInputGroup.seq[i] + " at position " + i);
-                        return;
-                    }
-                }
-
-                seqInputGroup._changeWaitingState(true);
-                $.ajax({
-                    url: '/find-lrr',
-                    method: 'POST',
-                    contentType: "application/json",
-                    data: JSON.stringify({seq: seqInputGroup.seq}),
-                    success: function (response) {
-                        seqInputGroup._changeWaitingState(false);
-                        let seq = {
-                            "seq": seqInputGroup.seq,
-                            "motifs_16": response['LRRs']
-                        };
-                        colorSeqView.onSelectSeq(seq);
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        seqInputGroup._changeWaitingState(false);
-                        if (xhr.status === 429) {
-                            $('#tooManyRequestAlert').modal('show');
-                            return;
-                        }
-                        let errorBody = JSON.parse(xhr.responseText);
-                        alert(errorThrown + ': ' + errorBody['message']);
-                    }
-                })
-            }
-        }
-    });

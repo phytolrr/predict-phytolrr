@@ -3,7 +3,6 @@ import phytolrr_predictor
 from phytolrr_predictor.tools.exception import ValidationError
 import sys
 import os
-import logging
 from typing import List
 from Bio import SeqIO
 
