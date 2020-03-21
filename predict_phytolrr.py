@@ -76,7 +76,11 @@ def print_result(rets:List[PredictResult]):
 
 
 def dump_html(path:str, rets:List[PredictResult]):
-    os.mkdir(path)
+    if not os.path.exists(path):
+        os.mkdir(path)
+    if not os.path.isdir(path):
+        raise ValidationError(1, "Error: the output path {} specified must be a directory".format(path))
+
     results = []
     for ret in rets:
         results.append({
@@ -90,7 +94,11 @@ def dump_html(path:str, rets:List[PredictResult]):
         f.write(';')
 
     module_path = os.path.join(os.path.dirname(__file__), 'phytolrr_predictor', 'resources')
-    shutil.copyfile(os.path.join(module_path, 'results.html'), os.path.join(path, 'results.html'))
+    html_file_path = os.path.join(module_path, 'results.html')
+    shutil.copyfile(html_file_path, os.path.join(path, 'results.html'))
+
+    print("{} sequences were predicted and the results have been saved in the file {}.".
+          format(len(results), html_file_path))
 
 def main():
     parser = ArgumentParser(description='Predict LRRs(Leucine-Rich Repeat) from sequences')
