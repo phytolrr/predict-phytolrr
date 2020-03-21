@@ -3,6 +3,7 @@ import phytolrr_predictor
 from phytolrr_predictor.tools.exception import ValidationError
 import sys
 import os
+import json
 from typing import List
 from Bio import SeqIO
 
@@ -73,9 +74,20 @@ def print_result(rets:List[PredictResult]):
             print(str.format("LRR offset {}, {}, score {}", m.offset, ret.seq.seq[m.offset:m.offset+16], m.score))
 
 
-def dump_html(path:str, ret:List[PredictResult]):
-    raise ValidationError(1, "Does not support dump to html files yet")
+def dump_html(path:str, rets:List[PredictResult]):
+    results = []
+    for ret in rets:
+        results.append({
+            'seq_id': ret.seq.id,
+            'seq': ret.seq.seq,
+            'motifs_16': [{'offset': m.offset, 'score': m.score} for m in ret.ret]
+        })
+    with open(os.path.join(path, 'results.js'), 'w') as f:
+        f.write('let results = ')
+        f.write(json.dumps(results))
+        f.write(';')
 
+    module_path = os.path.join(os.path.dirname(__file__), 'phytolrr_predictor', 'resources')
 
 def main():
     parser = ArgumentParser(description='Predict LRRs(Leucine-Rich Repeat) from sequences')
