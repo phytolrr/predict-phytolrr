@@ -178,7 +178,7 @@ const colorSeqView = new Vue({
                 if (motif.false_discovery) {
                     continue;
                 }
-                for (let pos = motif.offset; pos < motif.offset + 16; ++pos) {
+                for (let pos = motif.offset; pos < motif.offset + motif.length; ++pos) {
                     colorPoses.add(pos);
                 }
             }

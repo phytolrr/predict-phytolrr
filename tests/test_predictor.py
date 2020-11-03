@@ -2,6 +2,8 @@ import unittest
 import numpy.testing
 import logging
 import phytolrr_predictor
+from phytolrr_predictor.tools import pssm_matrix
+from phytolrr_predictor.tools import motifs as motifs_tools
 
 
 class TestLrrSearch(unittest.TestCase):
@@ -47,3 +49,14 @@ class TestLrrSearch(unittest.TestCase):
         self.assertEqual([m.offset for m in ms], [506, 530, 554])
         numpy.testing.assert_array_almost_equal([m.score for m in ms],
                                                 [14.0695893079814, 44.675678790101, 46.0801846076546])
+
+    def test_predict_self_defined_motifs_Bradi1g00260_2_p(self):
+        dataset = []
+        for m in phytolrr_predictor.default_train_motifs:
+            dataset.append(m[:11])
+        test_seq = 'MEMITMTLAVFVSCFHLPLLWSFLLQYLNFFSHSTYWKLSLVSCPVVLLSWHKLNSESLHGFARGRKYYHLSDMPSQWPGYWMVMLVLVVIMALSFISIHGQPDSHGFISIDCGYTASKQYVDSRTGLTYASDDGFIDAGLVHTVDSANLQPDLAVRYFNLRYFPSGPRNCYTFRSLTAGGKYLVRAAFGYGDYDKLNRLPTFDLYFGVNYWTTVTIVSSSTAYLFESIAVSPADFLQICLVNTGSGTPFISALDLRSLTANLYPEANVTQSMVLLSFFRDTVGFGPNRYHFGTNYQHIRFPDDPYDRIWQRYEDIASWTDLPNKSNGEIQNPPNDTYDAPSAVMRSASTPLNASAMDLSWSSDSSMSVGVNPTYILVLYFAELDASQDLRQFDVSVDNDLLLASAFSPKFLLATVLSGIVRGSGEHSISLTTTSNSVLDPLISAMEIFMVRPVNESATDSVDAWTMMTIQTKYSVKRNWVGDPCVPTSLAWDGLNCSYTPSSAPRITGLNMSSSGLVSEIDASFGQILLLQHLDLSHNSLSGSIPDFLGQLPALKFLDLSSNNLSGSIPCNLLEKSQNGLLALRVDNPNLHGDCAPRPVGSKNKI'
+        matrix = pssm_matrix.calc_pssm_matrix(dataset)
+        ms = phytolrr_predictor.predict(test_seq, matrix)
+        ms.sort(key=lambda m:m.offset)
+        ms = motifs_tools.found_no_overlapped_motifs(ms, 11)
+        self.assertEqual(len(ms), 6)

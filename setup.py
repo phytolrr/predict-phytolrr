@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="predict-phytolrr-phytolrr",
-    version="2020.03dev1",
+    version="2020.11dev1",
     author="PhytoLRR",
     author_email="phytolrr@163.com",
     description="A tool which predict phyto-LRRs from a sequences.",
@@ -22,7 +22,7 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'biopython>=1.73',
+        'biopython>=1.73,<1.78',
         'numpy>=1.16.3'
     ],
     package_data={

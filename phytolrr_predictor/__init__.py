@@ -4340,5 +4340,7 @@ class LrrResult(motifs.Motif):
     pass
 
 
-def predict(seq) -> List[LrrResult]:
-    return motifs.lrr_search(default_matrix, seq)
+def predict(seq, matrix=None) -> List[LrrResult]:
+    if matrix is None:
+        matrix = default_matrix
+    return motifs.lrr_search(matrix, seq)
