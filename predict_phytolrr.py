@@ -127,7 +127,7 @@ def read_motifs_from_file(file_path):
     return motifs, length
 
 
-def main():
+def main_run():
     parser = ArgumentParser(description='Predict LRRs(Leucine-Rich Repeat) from sequences')
     parser.add_argument('sequence', nargs='?', help='The sequence wish to be predicted.')
     parser.add_argument('-f', '--files', action='append',
@@ -170,10 +170,14 @@ def main():
     return 0
 
 
-if __name__ == "__main__":
+def main():
     try:
-        exit(main())
+        return main_run()
     except ValidationError as e:
         if e.message == 1:
             print("Error: " + e.detail)
             print("Please enter `{} -h` to see the usage.".format(sys.argv[0]))
+
+
+if __name__ == "__main__":
+    main()
