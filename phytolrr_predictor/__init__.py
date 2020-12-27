@@ -4341,6 +4341,7 @@ class LrrResult(motifs.Motif):
 
 
 def predict(seq, matrix=None) -> List[LrrResult]:
+    """Predict motifs from the `seq` str. If the `matrix` is None, using the built-in matrix to predict motifs"""
     if matrix is None:
         matrix = default_matrix
     return motifs.lrr_search(matrix, seq)

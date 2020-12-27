@@ -14,6 +14,7 @@ class Matrix(object):
 
 
 def calc_pssm_matrix(motif_seqs_str, origin=False):
+    """Generate the PSSM matrix from base line motifs `motif_seqs_str`"""
     motif_seq = [Seq(motif_seq_str, IUPAC.protein) for motif_seq_str in motif_seqs_str]
     matrix = motifs.create(motif_seq, IUPAC.protein)
 

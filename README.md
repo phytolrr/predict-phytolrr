@@ -113,4 +113,52 @@ The length of the predicted motifs will be of the same length with the motifs of
 
 ## Predict Phyto LRRs in source code
 
-TODO
+The `predict-phytolrr` also provides an API interface, so that it can be easily integrated into other python projects.
+
+To use `predict-phtolrr` to predict phyto-LRRs, just import `phytolrr_predictor` and call `predict`, which is defined as:
+
+```python
+def predict(seq, matrix=None):
+    """Predict motifs from the `seq` str. If the `matrix` is None, using the built-in matrix to predict motifs"""
+```
+
+Code example:
+
+```commandline
+>>> import phytolrr_predictor
+>>> test_seq = 'MGILFFLFALTLTLSSLSSSVFGLTQDGEALLEMKRGLNDTKGLLSNWKDTDINPCNWTRISCHLHDQRVRVINLPFLRLGGTISPSIGKITRLHRLAIH'
+>>> ms = phytolrr_predictor.predict(test_seq)
+>>> print(len(ms))
+2
+>>> print(ms[0].offset)                             # Print the offset of the first predicted motif 
+6
+>>> print(test_seq[ms[0].offset:ms[0].offset+16])   # Print the first predicted motif
+LFALTLTLSSLSSSVF
+>>> print(ms[0].score)
+10.774822491308072
+>>> print(ms[0].probability)
+0.0005707622379645206
+>>> print(ms[0].fdr_probability)
+0.04882352941176471
+```
+
+To use self-defined matrix to predict motifs, the matrix should be generated using function `pssm_matrix.calc_pssm_matrix`:
+
+```python
+def calc_pssm_matrix(motif_seqs_str):
+    """Generate the PSSM matrix from baseline motifs `motif_seqs_str`"""
+```
+
+Code example:
+
+```commandline
+>>> import phytolrr_predictor
+>>> from phytolrr_predictor.tools import pssm_matrix
+>>> baseline = [
+'LEVLFLHGNQLENDPY',
+'VTYLNLTHTGLQGTLT',
+'LQIFSIGGCHIKGSIP', ....]
+>>> matrix = pssm_matrix.calc_pssm_matrix(baseline)
+>>> ms = phytolrr_predictor.predict(test_seq, matrix)
+# other operations...
+```
