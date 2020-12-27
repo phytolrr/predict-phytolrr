@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="predict-phytolrr-phytolrr",
+    name="predict-phytolrr",
     version="2020.11dev1",
     author="PhytoLRR",
     author_email="phytolrr@163.com",
