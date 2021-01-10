@@ -73,7 +73,7 @@ $ predict-phytolrr -f test1.fasta -f test2.fasta
 
 ### NOTE
 
-1. Sequences with undefined amino acids, for instance "X", "*", will be skipped in the prediction process.
+1. Sequences with undefined amino acids read from fasta files, for instance "X", "*", will be skipped in the prediction process.
 2. The asterisk "*" at the end of the fasta sequence will be removed automatically during the prediction process.
 
 ### To display the results in html

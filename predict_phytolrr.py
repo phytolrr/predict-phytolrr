@@ -50,8 +50,10 @@ def read_seqs_from_files(file_paths:List[str]) -> List[Sequence]:
 
 
 def build_seq_from_str(seq_str:str) -> Sequence:
+    if seq_str.endswith('*'):
+        seq_str = seq_str[:-1]
     if not is_seq_valid("inputted", seq_str):
-        ValidationError(1, "The sequence input is invalid, and the prediction process will exit")
+        raise ValidationError(1, "The sequence input is invalid, and the prediction process will exit")
     return Sequence("Unknown_from_cmd_line", seq_str)
 
 

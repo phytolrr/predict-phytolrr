@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="predict-phytolrr",
-    version="2020.11dev1",
+    version="1.0.0",
     author="PhytoLRR",
     author_email="phytolrr@163.com",
     description="A tool which predict phyto-LRRs from a sequences.",
@@ -15,7 +15,7 @@ setuptools.setup(
     py_modules=['predict_phytolrr'],
     packages=setuptools.find_packages(include=['phytolrr_predictor', 'phytolrr_predictor.*']),
     classifiers=[
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Development Status :: 4 - Beta",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
@@ -35,4 +35,4 @@ setuptools.setup(
     },
 )
 
-# python3 setup.py sdist bdist_wheel
+# python setup.py sdist bdist_wheel
