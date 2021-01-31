@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="predict-phytolrr",
-    version="1.0.1",
+    version="1.0.2",
     author="PhytoLRR",
     author_email="phytolrr@163.com",
     description="A tool which predict phyto-LRRs from a sequences.",

@@ -4,6 +4,11 @@ The `predict-phytolrr` program could identify LRRs effectively, especially for *
 
 The program is based on the position specific scoring matrix (PSSM) algorithm and its training dataset are 4000 LRR motifs highly conserved sequences (HCSs) from LRR-RLKs of 17 land plant species. Please find detailed information at [https://www.phytolrr.com/about](https://www.phytolrr.com/about).
 
+# Citation for Phyto-LRR
+If the corresponding features in the `predict-phytolrr` program were applied for your analysis, please cite the following paper:
+
+Chen, T. Identification and characterization of the LRR repeats in plant LRR-RLKs. BMC Mol and Cell Biol 22, 9 (2021). https://doi.org/10.1186/s12860-021-00344-y
+
 # Install the program
 
 `predict-phytolrr` can be installed using `pip` **ONLY** under Python3 environment:
