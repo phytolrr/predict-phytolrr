@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="predict-phytolrr",
-    version="1.0.0",
+    version="1.0.1",
     author="PhytoLRR",
     author_email="phytolrr@163.com",
     description="A tool which predict phyto-LRRs from a sequences.",
@@ -36,3 +36,6 @@ setuptools.setup(
 )
 
 # python setup.py sdist bdist_wheel
+# twine upload --repository testpypi dist/*
+# twine upload dist/*
+# pip install --index-url https://test.pypi.org/simple/ --no-deps predict-phytolrr
